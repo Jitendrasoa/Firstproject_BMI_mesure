@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inch to cm</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(236, 239, 242);
+        }
+
+        #container {
+            padding: 20px;
+            height: 550px;
+            width: 500px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .container {
+            width: 500px;
+            background-color: white;
+        }
+
+        .required-star {
+            color: red;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2 class="text-center">BMI calculator</h2>
+        <div class="mt-5">
+            <p>Height (inch)</p>
+            <input type="number" class="form-control form-required" id="heightinch" placeholder="Enter height in inch">
+        </div>
+        <div class="form-group">
+            <label for="heightcm" class="mt-2">Height (cm)<span class="required-star">*</span></label>
+            <input type="number" class="form-control form-required" id="heightcm" placeholder="Enter height in cm" onclick="convert()">
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight (kg)<span class="required-star">*</span></label>
+            <input type="number" class="form-control form-required" id="weight" placeholder="Enter weight in kg">
+            <center><button type="reset" class="mt-2 btn btn-outline-primary" id="reset1" onclick="res()">Reset</button></center>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="calculateBMI()">Calculate BMI</button>
+        <h4 class="text-center mt-5">Your BMI is <span id="bmiResult">00.00</span>
+        <p id="comment" class="symbol"></p></h4>
+    </div>
+    
+    <script>
+        function convert() {
+            let w = document.querySelector("#heightcm");
+            let q = parseFloat(document.querySelector("#heightinch").value);
+            let t = q * 30.48; // Correct conversion from inches to cm
+            console.log(q);
+            console.log(t);
+            w.value = t.toFixed(2);
+            // document.querySelector("#storeresult").innerText = t.toFixed(2);
+        }
+
+        function calculateBMI() {
+            let heightCm = parseFloat(document.querySelector("#heightcm").value);
+            let weight = parseFloat(document.querySelector("#weight").value);
+            if (!heightCm || !weight) {
+                alert("Please enter valid height and weight");
+                return;
+            }
+            let heightM = heightCm / 100;
+            let bmi = weight / (heightM * heightM);
+            document.querySelector("#bmiResult").innerText = bmi.toFixed(2);
+            console.log(bmi)
+            if(bmi>25 && bmi<=30){
+            document.querySelector("#comment").innerText="Overweight"
+            document.querySelector(".symbol").style.color="orange"
+        }
+        else if(bmi<=25){
+document.querySelector("#comment").innerText="Normal"
+            document.querySelector(".symbol").style.color="green"
+        }
+        else if(bmi>30){
+            document.querySelector("#comment").innerText="Excess"
+            document.querySelector(".symbol").style.color="red"
+        }
+        }
+        let re=document.querySelector("reset1")
+        function res(){
+            document.querySelector("#heightcm").value="";
+            document.querySelector("#heightinch").value="";
+            document.querySelector("#weight").value="";
+        }
+        
+
+    </script>
+</body>
+</html>
+;
